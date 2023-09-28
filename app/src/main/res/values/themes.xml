@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.SocialMedia" parent="Theme.MaterialComponents.Light">
         <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:actionMenuTextColor">@color/black</item>
     </style>
 
     <style name="Theme.SocialMedia" parent="Base.Theme.SocialMedia"/>

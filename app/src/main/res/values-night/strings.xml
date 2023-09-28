@@ -7,4 +7,6 @@
     <string name="select_image">select image</string>
     <string name="enter_a_comment">Enter a comment</string>
     <string name="upload">Upload</string>
+    <string name="add_post">Add Post</string>
+    <string name="sign_out">Sign Out</string>
 </resources>
