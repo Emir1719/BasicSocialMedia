@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "526130152725",
+    "project_id": "basicsocialmedia-59198",
+    "storage_bucket": "basicsocialmedia-59198.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526130152725:android:674385c11830e7e09f951c",
+        "android_client_info": {
+          "package_name": "com.emirozturk.socialmedia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv6pupxkWuroXa0nfvttAOMCjcj8PlM1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
