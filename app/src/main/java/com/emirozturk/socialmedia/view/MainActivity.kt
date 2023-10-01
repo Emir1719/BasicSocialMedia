@@ -1,9 +1,9 @@
-package com.emirozturk.socialmedia
+package com.emirozturk.socialmedia.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.emirozturk.socialmedia.ToastMessage.showMessage
+import com.emirozturk.socialmedia.widget.showMessage
 import com.emirozturk.socialmedia.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

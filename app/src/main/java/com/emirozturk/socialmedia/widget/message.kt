@@ -1,4 +1,4 @@
-package com.emirozturk.socialmedia.ToastMessage
+package com.emirozturk.socialmedia.widget
 import android.content.Context
 import android.widget.Toast
 
