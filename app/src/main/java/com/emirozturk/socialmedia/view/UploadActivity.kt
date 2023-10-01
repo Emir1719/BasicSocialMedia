@@ -12,8 +12,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.emirozturk.socialmedia.R
 import com.emirozturk.socialmedia.widget.showMessage
 import com.emirozturk.socialmedia.databinding.ActivityUploadBinding
+import com.emirozturk.socialmedia.widget.createProgressDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -29,7 +31,7 @@ class UploadActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadBinding
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
-    var selectedPicture: Uri? = null
+    private var selectedPicture: Uri? = null
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
@@ -45,6 +47,21 @@ class UploadActivity : AppCompatActivity() {
     }
 
     fun upload(view: View) {
+        if (binding.imageUserPost.drawable.constantState == ContextCompat.getDrawable(this, R.drawable.image)?.constantState) {
+            //Bir görsel seçilmediyse yüklemeyi iptal et.
+            showMessage(this, "Please, select an image!")
+            return
+        }
+        if (binding.userComment.text!!.isEmpty()) {
+            //Yorum boş ise yüklemeyi iptal et.
+            showMessage(this, "Please, enter a comment!")
+            return
+        }
+
+        val alert = createProgressDialog(this)
+        alert.setMessage("Your post is loading...")
+        alert.show()
+
         val uuid = UUID.randomUUID()
         val imageName = "$uuid.jpg"
         val reference = storage.reference
@@ -57,25 +74,28 @@ class UploadActivity : AppCompatActivity() {
                     val postMap = hashMapOf<String, Any>()
                     postMap.put("email", auth.currentUser!!.email!!)
                     postMap.put("url", downloadUrl)
-                    postMap.put("comment", binding.editMail.text.let { it.toString() })
+                    postMap.put("comment", binding.userComment.text.let { it.toString() })
                     postMap.put("date", Timestamp.now())
 
                     firestore.collection("Posts").add(postMap).addOnSuccessListener {
+                        alert.hide()
                         finish()
                     }.addOnFailureListener {
+                        alert.hide()
                         showMessage(this, it.localizedMessage!!)
                     }
                 }
             }.addOnFailureListener {
+                alert.hide()
                 showMessage(this, it.localizedMessage ?: "Hata!")
             }
         }
     }
 
     fun selectImage(view: View) {
-        var permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+        var permission = Manifest.permission.READ_EXTERNAL_STORAGE
         if (Build.VERSION.SDK_INT >= 33) {
-            permission =  Manifest.permission.READ_MEDIA_IMAGES;
+            permission =  Manifest.permission.READ_MEDIA_IMAGES
         }
 
         if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
